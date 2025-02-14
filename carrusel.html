@@ -1,0 +1,293 @@
+
+
+
+  <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrusel Romántico Responsivo</title>
+  <!-- Fuentes -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Montserrat", sans-serif;
+      /* Fondo romántico */
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* Contenedor principal del carrusel */
+    .carousel {
+      position: relative;
+      width: 90%;              /* Ajuste para mayor responsividad */
+      max-width: 800px;
+      margin: auto;
+      border-radius: 15px;
+      overflow: hidden;
+      background-color: #000;  /* Color de fondo para evitar parpadeo */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: height 0.3s ease; /* Transición suave de la altura */
+    }
+
+    /* Elemento interno de cada slide */
+    .carousel-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      z-index: 0; /* Las imágenes inactivas quedan detrás */
+    }
+
+    /* Slide activo visible */
+    .carousel-item.active {
+      opacity: 1;
+      z-index: 1; /* La imagen activa queda delante */
+    }
+
+    /* Ajuste de la imagen para verla completa */
+    .carousel-item img {
+      display: block;
+      width: 100%;
+      height: auto;          /* Permite mantener la proporción */
+      object-fit: contain;   /* Muestra la imagen completa sin recortarla */
+    }
+
+    /* Overlay romántico de corazones sutiles */
+    .carousel-item::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgba(255,255,255,0.2)'><text x='50%' y='50%' text-anchor='middle' dominant-baseline='middle' font-size='40'>❤</text></svg>") repeat;
+    }
+
+    /* Flechas de navegación */
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 2; /* Encima de las imágenes */
+    }
+    .carousel:hover .carousel-nav {
+      opacity: 1;
+    }
+    .carousel-nav button {
+      background: rgba(255, 105, 180, 0.5);
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .carousel-nav button:hover {
+      background: rgba(255, 105, 180, 0.8);
+      transform: scale(1.1);
+    }
+
+    /* Indicadores en forma de corazón */
+    .carousel-indicators {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 2; /* Encima de las imágenes */
+    }
+    .carousel-indicators span {
+      font-family: "Great Vibes", cursive;
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      transition: color 0.3s, transform 0.2s;
+    }
+    .carousel-indicators span.active {
+      color: rgba(255, 255, 255, 1);
+      transform: scale(1.2);
+    }
+
+    /* --- MEDIA QUERIES para mayor responsividad --- */
+    @media (max-width: 600px) {
+      .carousel {
+        width: 95%;         /* Ocupa casi todo el ancho en móviles */
+      }
+      .carousel-nav button {
+        font-size: 20px;    /* Flechas un poco más pequeñas */
+        padding: 8px;
+      }
+      .carousel-indicators span {
+        font-size: 20px;    /* Corazones ligeramente más pequeños */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="carousel">
+    <!-- Slides (8 fotos en total). Reemplaza las rutas con tus imágenes reales -->
+    <div class="carousel-item active">
+        <img src="Foto1.jpg"Foto1" />
+      </div>
+      <div class="carousel-item">
+        <img src="Foto2.jpg" alt="Foto2" />
+      </div>
+      <div class="carousel-item">
+        <img src="Foto3.jpg" alt="Foto3" />
+      </div>
+      <div class="carousel-item">
+        <img src="Foto4.jpg" alt="Foto4" />
+      </div>
+      <div class="carousel-item">
+        <img src="Foto5.jpeg" alt="Foto5" />
+      </div>
+      <div class="carousel-item">
+        <img src="Foto6.jpeg" alt="Foto6" />
+      </div>
+      <div class="carousel-item">
+        <img src="Foto7.jpeg" alt="Foto7" />
+      </div>
+      <div class="carousel-item">
+        <img src="Foto8.png" alt="Foto8" />
+      </div>
+    
+    
+
+    <!-- Controles de navegación -->
+    <div class="carousel-nav">
+      <button id="prev">&#10094;</button>
+      <button id="next">&#10095;</button>
+    </div>
+
+    <!-- Indicadores (8 corazones) -->
+    <div class="carousel-indicators">
+      <span data-index="0" class="active">❤</span>
+      <span data-index="1">❤</span>
+      <span data-index="2">❤</span>
+      <span data-index="3">❤</span>
+      <span data-index="4">❤</span>
+      <span data-index="5">❤</span>
+      <span data-index="6">❤</span>
+      <span data-index="7">❤</span>
+    </div>
+  </div>
+
+  <script>
+    /* --- Selección de elementos y variables globales --- */
+    const carousel = document.querySelector(".carousel");
+    const items = document.querySelectorAll(".carousel-item");
+    const indicators = document.querySelectorAll(".carousel-indicators span");
+    const totalItems = items.length;
+
+    let currentIndex = 0;
+    const intervalTime = 5000;  // Tiempo de cada slide
+    let slideInterval;
+
+    /* --- Función para activar un slide específico --- */
+    function updateCarousel(index) {
+      items.forEach((item, i) => {
+        item.classList.toggle("active", i === index);
+      });
+      indicators.forEach((ind, i) => {
+        ind.classList.toggle("active", i === index);
+      });
+      currentIndex = index;
+      adjustCarouselHeight();
+    }
+
+    /* --- Siguiente / Anterior --- */
+    function nextSlide() {
+      const nextIndex = (currentIndex + 1) % totalItems;
+      updateCarousel(nextIndex);
+    }
+    function prevSlide() {
+      const prevIndex = (currentIndex - 1 + totalItems) % totalItems;
+      updateCarousel(prevIndex);
+    }
+
+    /* --- Ajuste dinámico de la altura del carrusel según la imagen activa --- */
+    function adjustCarouselHeight() {
+      const activeItem = items[currentIndex];
+      const img = activeItem.querySelector("img");
+
+      if (img.complete) {
+        setCarouselHeight(img);
+      } else {
+        // Espera a que la imagen se cargue
+        img.addEventListener("load", () => setCarouselHeight(img), { once: true });
+      }
+    }
+
+    function setCarouselHeight(image) {
+      const naturalWidth = image.naturalWidth || 1;
+      const naturalHeight = image.naturalHeight || 1;
+      const ratio = naturalHeight / naturalWidth;
+
+      const containerWidth = carousel.clientWidth;
+      const newHeight = containerWidth * ratio;
+
+      carousel.style.height = newHeight + "px";
+    }
+
+    /* --- Listeners para botones de navegación --- */
+    document.getElementById("next").addEventListener("click", () => {
+      nextSlide();
+      resetInterval();
+    });
+    document.getElementById("prev").addEventListener("click", () => {
+      prevSlide();
+      resetInterval();
+    });
+
+    /* --- Listeners para indicadores --- */
+    indicators.forEach((indicator) => {
+      indicator.addEventListener("click", () => {
+        const index = parseInt(indicator.getAttribute("data-index"));
+        updateCarousel(index);
+        resetInterval();
+      });
+    });
+
+    /* --- Funciones para intervalos automáticos --- */
+    function startInterval() {
+      slideInterval = setInterval(nextSlide, intervalTime);
+    }
+    function resetInterval() {
+      clearInterval(slideInterval);
+      startInterval();
+    }
+
+    /* --- Ajustar altura al redimensionar la ventana --- */
+    window.addEventListener("resize", adjustCarouselHeight);
+
+    /* --- Inicialización --- */
+    updateCarousel(currentIndex);
+    startInterval();
+  </script>
+</body>
+</html>

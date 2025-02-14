@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=The+Nautigal&display=swap');
+
+    body {
+      background-image: linear-gradient(130deg, #F9F5F6, #F8E8EE, #FDCEDF, #F2BED1, rgb(198, 107, 154));
+      background-size: 150% 150%;
+      padding: 0;
+      margin: 0;
+      border: 8px solid black;
+      height: 100vh;
+      box-sizing: border-box;
+      animation: fondo 10s infinite;
+      transition: transform 1s;
+    }
+
+    @keyframes fondo {
+      0% {
+        background-position: 0% 90%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 90%;
+      }
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .love {
+      width: 50px;
+      height: 50px;
+      background-color: rgb(171, 0, 0);
+      position: absolute;
+      transform: rotate(45deg) scale(6);
+      border-radius: 1px;
+      animation: love 3s normal infinite;
+      cursor: pointer; /* Indica que es clickeable */
+    }
+
+    @keyframes love {
+      0% {
+        transform: rotate(45deg) scale(5);
+      }
+      50% {
+        transform: rotate(45deg) scale(6);
+      }
+      100% {
+        transform: rotate(45deg) scale(5);
+      }
+    }
+
+    .love:before,
+    .love:after {
+      content: "";
+      width: 50px;
+      height: 50px;
+      background-color: rgb(171, 0, 0);
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .love:before {
+      top: 0;
+      left: -25px;
+    }
+
+    .love:after {
+      top: -25px;
+    }
+
+    .te-amo {
+      letter-spacing: 5px;
+      text-align: center;
+      z-index: 100;
+      font-size: 100px;
+      font-weight: 200;
+      margin: 0;
+      padding: 0;
+      margin-right: 10px;
+      margin-top: -60px;
+      font-family: 'The Nautigal', cursive;
+      color: rgb(255, 255, 255);
+      animation: letra 3s ease infinite;
+    }
+
+    @keyframes letra {
+      0% {
+        font-size: 100px;
+        text-shadow: 0 0 9px black, 0 0 9px black, 0 0 9px black;
+      }
+      50% {
+        font-size: 120px;
+        text-shadow: 0 0 15px black, 0 0 15px black, 0 0 9px black;
+      }
+      100% {
+        font-size: 100px;
+        text-shadow: 0 0 9px black, 0 0 9px black, 0 0 9px black;
+      }
+    }
+
+    @media only screen and (max-width: 500px) {
+      .container {
+        height: 80vh;
+      }
+      .love {
+        transform: rotate(45deg) scale(3);
+        animation: love1 3s ease infinite;
+      }
+      @keyframes love1 {
+        0% {
+          transform: rotate(45deg) scale(3);
+        }
+        50% {
+          transform: rotate(45deg) scale(3.8);
+        }
+        100% {
+          transform: rotate(45deg) scale(3);
+        }
+      }
+      .te-amo {
+        font-size: 60px;
+        animation: letra1 3s ease infinite;
+      }
+      @keyframes letra1 {
+        0% {
+          font-size: 60px;
+          text-shadow: 0 0 4px black, 0 0 4px black, 0 0 4px black;
+        }
+        50% {
+          font-size: 80px;
+          text-shadow: 0 0 9px black, 0 0 9px black, 0 0 4px black;
+        }
+        100% {
+          font-size: 60px;
+          text-shadow: 0 0 4px black, 0 0 4px black, 0 0 4px black;
+        }
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Música de fondo (con preload para cargarla de antemano) -->
+    <audio id="myAudio" src="Musica.mp3" autoplay loop preload="auto"></audio>
+
+    <!-- Diseño del corazón -->
+    <div class="love"></div>
+    <p class="te-amo">Te Amo <br>Nikol</p>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var audio = document.getElementById('myAudio');
+      
+      // Intento de reproducir la música al cargar la página
+      audio.play().catch(error => {
+        console.log("Autoplay bloqueado, se activará al interactuar: ", error);
+        // Si el navegador bloquea el autoplay, se espera a la interacción del usuario
+        const enableAudio = () => {
+          audio.play().then(() => {
+            console.log("Música reproducida tras la interacción del usuario.");
+          }).catch(err => {
+            console.log("Error al reproducir tras la interacción: ", err);
+          });
+          document.body.removeEventListener('click', enableAudio);
+        };
+        document.body.addEventListener('click', enableAudio);
+      });
+
+      // Evento para cargar el carrusel en un iframe al hacer clic en el corazón
+      const heartDiv = document.querySelector('.love');
+      heartDiv.addEventListener('click', function () {
+        // Crear el iframe que carga carrusel.html
+        const iframe = document.createElement('iframe');
+        iframe.src = 'carrusel.html';
+        
+        // Establecer estilos para que el iframe ocupe toda la ventana
+        iframe.style.position = 'fixed';
+        iframe.style.top = '0';
+        iframe.style.left = '0';
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = 'none';
+        iframe.style.zIndex = '9999';
+        
+        // Añadir el iframe al body
+        document.body.appendChild(iframe);
+      });
+    });
+
+    // Función para crear efecto de nieve
+    const bodyElement = document.querySelector('body');
+    const crearNieve = () => {
+      let copo = document.createElement("i");
+      let x = innerWidth * Math.random() - 36;
+      let size = (Math.random() * 8) + 2;
+      let z = Math.round(Math.random());
+      let delay = Math.random() * 4;
+      let anima = (Math.random() * 9) + 4;
+
+      copo.style.left = x + "px";
+      copo.style.width = size + "px";
+      copo.style.height = size + "px";
+      copo.style.zIndex = z;
+      copo.style.animationDelay = delay + "s";
+      copo.style.animationDuration = anima + "s";
+
+      bodyElement.appendChild(copo);
+
+      setTimeout(() => {
+        copo.remove();
+      }, anima * 900);
+    };
+
+    setInterval(crearNieve, 100);
+  </script>
+</body>
+</html>
